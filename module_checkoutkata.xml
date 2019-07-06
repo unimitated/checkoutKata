@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_checkoutkata" default="compile.module.checkoutkata">
+  <dirname property="module.checkoutkata.basedir" file="${ant.file.module_checkoutkata}"/>
+  
+  <property name="module.jdk.home.checkoutkata" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.checkoutkata" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.checkoutkata" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.checkoutkata" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="checkoutkata.output.dir" value="${module.checkoutkata.basedir}/target/classes"/>
+  <property name="checkoutkata.testoutput.dir" value="${module.checkoutkata.basedir}/target/test-classes"/>
+  
+  <path id="checkoutkata.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="checkoutkata.module.production.classpath">
+    <path refid="${module.jdk.classpath.checkoutkata}"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-engine:5.5.0.classpath"/>
+    <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-engine:1.5.0.classpath"/>
+    <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.5.0.classpath"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.5.0.classpath"/>
+  </path>
+  
+  <path id="checkoutkata.runtime.production.module.classpath">
+    <pathelement location="${checkoutkata.output.dir}"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-engine:5.5.0.classpath"/>
+    <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-engine:1.5.0.classpath"/>
+    <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.5.0.classpath"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.5.0.classpath"/>
+  </path>
+  
+  <path id="checkoutkata.module.classpath">
+    <path refid="${module.jdk.classpath.checkoutkata}"/>
+    <pathelement location="${checkoutkata.output.dir}"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-engine:5.5.0.classpath"/>
+    <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-engine:1.5.0.classpath"/>
+    <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.5.0.classpath"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.5.0.classpath"/>
+  </path>
+  
+  <path id="checkoutkata.runtime.module.classpath">
+    <pathelement location="${checkoutkata.testoutput.dir}"/>
+    <pathelement location="${checkoutkata.output.dir}"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-engine:5.5.0.classpath"/>
+    <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-engine:1.5.0.classpath"/>
+    <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+    <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.5.0.classpath"/>
+    <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.5.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.checkoutkata">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.checkoutkata">
+    <patternset refid="excluded.from.module.checkoutkata"/>
+  </patternset>
+  
+  <path id="checkoutkata.module.sourcepath">
+    <dirset dir="${module.checkoutkata.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="checkoutkata.module.test.sourcepath">
+    <dirset dir="${module.checkoutkata.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.checkoutkata" depends="compile.module.checkoutkata.production,compile.module.checkoutkata.tests" description="Compile module checkoutKata"/>
+  
+  <target name="compile.module.checkoutkata.production" depends="register.custom.compilers" description="Compile module checkoutKata; production classes">
+    <mkdir dir="${checkoutkata.output.dir}"/>
+    <javac2 destdir="${checkoutkata.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.checkoutkata}/javac">
+      <compilerarg line="${compiler.args.checkoutkata}"/>
+      <bootclasspath refid="checkoutkata.module.bootclasspath"/>
+      <classpath refid="checkoutkata.module.production.classpath"/>
+      <src refid="checkoutkata.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.checkoutkata"/>
+    </javac2>
+    
+    <copy todir="${checkoutkata.output.dir}">
+      <fileset dir="${module.checkoutkata.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.checkoutkata.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.checkoutkata.tests" depends="register.custom.compilers,compile.module.checkoutkata.production" description="compile module checkoutKata; test classes" unless="skip.tests">
+    <mkdir dir="${checkoutkata.testoutput.dir}"/>
+    <javac2 destdir="${checkoutkata.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.checkoutkata}/javac">
+      <compilerarg line="${compiler.args.checkoutkata}"/>
+      <bootclasspath refid="checkoutkata.module.bootclasspath"/>
+      <classpath refid="checkoutkata.module.classpath"/>
+      <src refid="checkoutkata.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.checkoutkata"/>
+    </javac2>
+    
+    <copy todir="${checkoutkata.testoutput.dir}">
+      <fileset dir="${module.checkoutkata.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.checkoutkata" description="cleanup module">
+    <delete dir="${checkoutkata.output.dir}"/>
+    <delete dir="${checkoutkata.testoutput.dir}"/>
+  </target>
+</project>
