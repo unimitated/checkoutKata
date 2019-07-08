@@ -1,4 +1,4 @@
-
+package com.unimitated.checkout;
 
 public class POSItem {
      public String getName() {

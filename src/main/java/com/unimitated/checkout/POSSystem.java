@@ -1,4 +1,8 @@
+package com.unimitated.checkout;
+
 import java.util.concurrent.ConcurrentHashMap;
+import com.unimitated.checkout.POSItem;
+
 
 
 public class POSSystem {
