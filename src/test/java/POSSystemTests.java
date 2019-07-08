@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.unimitated.checkout.POSItem;
+import com.unimitated.checkout.POSSystem;
 
 class POSSystemTests {
 
@@ -15,9 +17,9 @@ class POSSystemTests {
     @Test
     void addScannableItem() {
         POSItem item = new POSItem();
-        item.name = "Bread";
+        item.setName("Bread");
         posSystem.addOrUpdateScannableItem("Bread", item);
-        Assertions.assertEquals(posSystem.getItemInfo("Bread").name, item.name);
+        Assertions.assertEquals(posSystem.getItemInfo("Bread").getName(), item.getName());
     }
 
     @Test
@@ -31,8 +33,8 @@ class POSSystemTests {
     void whenAUnitItemHasAMarkdown() {
         POSItem item = new POSItem();
 
-        item.price = 4.00;
-        item.markdownAmount = 2.00;
+        item.setPrice(4.00);
+        item.setMarkdownAmount(2.00);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
         posSystem.scanItem("Beef", 0);
@@ -44,8 +46,8 @@ class POSSystemTests {
     void whenAWeighedItemHasAMarkdown() {
         POSItem item = new POSItem();
 
-        item.price = 4.00;
-        item.markdownAmount = 2.00;
+        item.setPrice(4.00);
+        item.setMarkdownAmount(2.00);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 3.0);
         posSystem.scanItem("Beef", 2.0);
@@ -58,10 +60,10 @@ class POSSystemTests {
         POSItem item = new POSItem();
         POSItem item2 = new POSItem();
 
-        item.price = 3.99;
+        item.setPrice(3.99);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
-        item2.price = 5.01;
+        item2.setPrice(5.01);
         posSystem.addOrUpdateScannableItem("Fish", item2);
         posSystem.scanItem("Fish", 0);
         Assertions.assertEquals(9.00, posSystem.getCurrentTotal());
@@ -72,10 +74,10 @@ class POSSystemTests {
         POSItem item = new POSItem();
         POSItem item2 = new POSItem();
 
-        item.price = 3.99;
+        item.setPrice(3.99);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
-        item2.price = 5.01;
+        item2.setPrice(5.01);
         posSystem.addOrUpdateScannableItem("Fish", item2);
         posSystem.scanItem("Fish", 3.0);
 
@@ -102,11 +104,11 @@ class POSSystemTests {
     void whenABuyGetDiscountIsApplied() {
         POSItem item = new POSItem();
 
-        item.price = 8.00;
-        item.special = 1;
-        item.specialBuyCount = 3;
-        item.specialGetCount = 1;
-        item.specialDiscount = .50;
+        item.setPrice(8.00);
+        item.setSpecial(1);
+        item.setSpecialBuyCount(3);
+        item.setSpecialGetCount(1);
+        item.setSpecialDiscount(.50);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
         posSystem.scanItem("Beef", 0);
@@ -128,10 +130,10 @@ class POSSystemTests {
     void whenABuyXForNDiscountIsApplied() {
         POSItem item = new POSItem();
 
-        item.price = 8.00;
-        item.special = 2;
-        item.specialBuyCount = 3;
-        item.specialDiscount = 5.00;
+        item.setPrice(8.00);
+        item.setSpecial(2);
+        item.setSpecialBuyCount(3);
+        item.setSpecialDiscount(5.00);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
         posSystem.scanItem("Beef", 0);
@@ -160,11 +162,11 @@ class POSSystemTests {
     void whenABuyXGetNAtYWeighedDiscountIsApplied() {
         POSItem item = new POSItem();
 
-        item.price = 8.00;
-        item.special = 3;
-        item.specialBuyCount = 2;
-        item.specialGetCount = 1;
-        item.specialDiscount = .75;
+        item.setPrice(8.00);
+        item.setSpecial(3);
+        item.setSpecialBuyCount(2);
+        item.setSpecialGetCount(1);
+        item.setSpecialDiscount(.75);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 6);
         posSystem.scanItem("Beef", 1);
@@ -186,11 +188,11 @@ class POSSystemTests {
     void whenASpecialLimitExistsPerUnit() {
         POSItem item = new POSItem();
 
-        item.price = 8.00;
-        item.special = 2;
-        item.specialBuyCount = 2;
-        item.specialDiscount = 5.00;
-        item.specialLimit = 4;
+        item.setPrice(8.00);
+        item.setSpecial(2);
+        item.setSpecialBuyCount(2);
+        item.setSpecialDiscount(5.00);
+        item.setSpecialLimit(4);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 0);
         posSystem.scanItem("Beef", 0);
@@ -210,12 +212,12 @@ class POSSystemTests {
     void whenASpecialLimitExistsPerWeight() {
         POSItem item = new POSItem();
 
-        item.price = 8.00;
-        item.special = 3;
-        item.specialBuyCount = 2;
-        item.specialGetCount = 1;
-        item.specialDiscount = .50;
-        item.specialLimit = 6;
+        item.setPrice(8.00);
+        item.setSpecial(3);
+        item.setSpecialBuyCount(2);
+        item.setSpecialGetCount(1);
+        item.setSpecialDiscount(.50);
+        item.setSpecialLimit(6);
         posSystem.addOrUpdateScannableItem("Beef", item);
         posSystem.scanItem("Beef", 6);
 
