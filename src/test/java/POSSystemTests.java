@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.unimitated.checkout.POSItem;
-import com.unimitated.checkout.POSSystem;
+
 
 class POSSystemTests {
 
